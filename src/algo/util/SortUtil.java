@@ -105,22 +105,21 @@ public class SortUtil {
 
     private static int partition(int[] array, int left, int right) {
         int k = array[left];
-        int i = left, j = right;
 
-        while (i < j) {
-            while (array[j] >= k && j > i) j--;
-            if (j > i) {
-                array[i] = array[j];
-                i++;
+        while (left < right) {
+            while (array[right] >= k && right > left) right--;
+            if (right > left) {
+                array[left] = array[right];
+                left++;
             }
-            while (array[i] < k && j > i) i++;
-            if (j > i) {
-                array[j] = array[i];
-                j--;
+            while (array[left] < k && right > left) left++;
+            if (right > left) {
+                array[right] = array[left];
+                right--;
             }
         }
-        array[i] = k;
-        return i;
+        array[left] = k;
+        return left;
     }
 
     public static void MergeSort(int[] array, int left, int right) {

@@ -6,22 +6,22 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class MyBlockQueue<T> {
-    private List<T> list = new ArrayList<>();
+    private final List<T> list = new ArrayList<>();
     private volatile int size;
-    private volatile int capasity;
-    private Lock lock = new ReentrantLock();
+    private final int capacity;
+    private final Lock lock = new ReentrantLock();
     private final Condition isNull = lock.newCondition();
     private final Condition isFull = lock.newCondition();
 
-    public MyBlockQueue(int capasity) {
-        this.capasity = capasity;
+    public MyBlockQueue(int capacity) {
+        this.capacity = capacity;
     }
 
     public void add(T data) {
         try {
             lock.lock();
             try {
-                while (size >= capasity) {
+                while (size >= capacity) {
                     System.out.println("阻塞队列已满");
                     isFull.await();
                 }
